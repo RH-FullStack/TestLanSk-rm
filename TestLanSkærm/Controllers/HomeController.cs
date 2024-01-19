@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using TestLanSkærm.Models;
 using TestLanSkærm.Service;
+using TestLanSkærm.ResponseModels;
 
 namespace TestLanSkærm.Controllers
 {
@@ -17,12 +18,21 @@ namespace TestLanSkærm.Controllers
 
 		public IActionResult Index()
 		{
-			_authToken.GetAuthToken();
+			
 			return View();
 		}
 
-		public IActionResult Privacy()
+		public async Task<IActionResult> SampleFunctionAsync()
 		{
+			AccessTokenResponse test = await _authToken.GetAuthTokenAsync();
+			var tournement = test.Value;
+			return View();
+		}
+
+		public IActionResult Embed()
+		{
+			
+
 			return View();
 		}
 

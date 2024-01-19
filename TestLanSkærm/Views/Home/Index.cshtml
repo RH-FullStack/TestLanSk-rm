@@ -1,8 +1,34 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	<h1 class="display-4">Welcome</h1>
+	<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<button id="callFunction">Call SampleFunction</button>
+
+<div id="resultContainer"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('#callFunction').click(function () {
+			var refreshKey = "NmQ2OGNmODFjYTgzNDk5MjMyYjMwOGRjMTFmYTJlNTNqYWl6S0RFTmJ5cHlzTldoR2thTE1DcFVzZnNtT2dZRQ==";
+			var baseUrl = "https://publicapi.challengermode.com/mk1/v1/auth/access_keys";
+
+			$.ajax({
+				url: '@Url.Action("SampleFunction", "Home")',
+                type: 'GET',
+                success: function (data) {
+                    // Handle the returned data (JSON) as needed
+                    $('#resultContainer').html('Object Property: ' + data.propertyName);
+                },
+                error: function () {
+                    console.error('Error calling SampleFunction');
+                }
+            });
+
+		});
+	});
+</script>

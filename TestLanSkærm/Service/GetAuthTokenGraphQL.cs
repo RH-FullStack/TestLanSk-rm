@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
+using TestLanSkærm.ResponseModels;
 using TestLanSkærm.Service;
 namespace TestLanSkærm.Service
 {
@@ -10,15 +13,50 @@ namespace TestLanSkærm.Service
 			_httpClientService = httpClientService;
 		}
 
-		public HttpResponseMessage GetAuthToken()
+		public async Task<AccessTokenResponse> GetAuthTokenAsync()
 		{
-			var refreshKey = "NmQ2OGNmODFjYTgzNDk5MjMyYjMwOGRjMTFmYTJlNTNqYWl6S0RFTmJ5cHlzTldoR2thTE1DcFVzZnNtT2dZRQ==";
-			var testClient = _httpClientService.GetHttpClient();
-			var baseUrl = "https://publicapi.challengermode.com/mk1/v1/auth/access_keys";
-			testClient.DefaultRequestHeaders.Add("refreshKey", refreshKey);
-			var response = testClient.PostAsync(baseUrl, null);
+			string apiUrl = "https://publicapi.challengermode.com/mk1/v1/auth/access_keys";
+			string accessToken = "YOUR_ACCESS_TOKEN";  // Replace with your actual access token
 
-			return response.Result;
+			using (HttpClient client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Add("Accept", "*/*");
+				client.DefaultRequestHeaders.Add("Origin", "https://www.challengermode.com");
+				client.DefaultRequestHeaders.Add("Referer", "https://www.challengermode.com/");
+
+				// Request body
+				string requestBody = "{\"refreshKey\": \"M2IzOTAxNGJkZTkyNGM1OTg1NzMwOGRjMTA3NzFhZTBFVUZQQWdHSHFpb1JWZWxPSUVNSGJFSU5FWUt0VXZaWA==\"}";  // Replace with your actual JSON request body
+
+				var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+
+				HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+
+				if (response.IsSuccessStatusCode)
+				{
+					string result = await response.Content.ReadAsStringAsync();
+					if (result != null)
+					{
+						AccessTokenResponse? tokenResponse = JsonConvert.DeserializeObject<AccessTokenResponse>(result);
+
+						if (tokenResponse != null)
+						{
+							return tokenResponse;
+						}
+						else
+						{
+							return new AccessTokenResponse { Value= null };
+						}
+					}
+
+					return new AccessTokenResponse { Value = null };
+				}
+				else
+				{
+					Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+				}
+				return new AccessTokenResponse { Value = null };
+			}
+
 		}
 	}
 }
