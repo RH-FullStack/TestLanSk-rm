@@ -25,7 +25,7 @@ namespace TestLanSkærm.Service
 				client.DefaultRequestHeaders.Add("Referer", "https://www.challengermode.com/");
 
 				// Request body
-				string requestBody = "{\"refreshKey\": \"M2IzOTAxNGJkZTkyNGM1OTg1NzMwOGRjMTA3NzFhZTBFVUZQQWdHSHFpb1JWZWxPSUVNSGJFSU5FWUt0VXZaWA==\"}";  // Replace with your actual JSON request body
+				string requestBody = "{\"refreshKey\": \"MmUyM2RlODZjYTI4NDAzNTg1NzUwOGRjMTA3NzFhZTByQURTVkViUFBXWU9xbHlDSHBza2NhY3BITHBPTEFMUg==\"}";  // Replace with your actual JSON request body
 
 				var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
 

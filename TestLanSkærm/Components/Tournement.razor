@@ -1,0 +1,19 @@
+﻿@inherits Microsoft.AspNetCore.Components.ComponentBase
+@using TestLanSkærm.Models.Tournement;
+@using TestLanSkærm.ResponseModels;
+@using TestLanSkærm.Service;
+@using TestLanSkærm.Service.Tournements;
+@inject GetAuthTokenGraphQL _authToken;
+<h3>Tournement</h3>
+
+@code {
+    private List<TestLanSkærm.Models.Tournement.Tournement>? tournements;
+    protected override async Task OnInitializedAsync()
+    {
+        //recipies = await Http.GetFromJsonAsync<Recipe[]>("https://localhost:7252/api/Recipe/getallrecipe");
+        List<string> strings = new List<string>();
+        strings.Add("63f86dd2-c649-4ae1-2c8f-08dc16b0d7f7");
+        var test = await _authToken.GetAuthTokenAsync();
+        tournements = await TournementService.GetAllTournements(test.Value, strings);
+    }
+}

@@ -24,8 +24,6 @@ namespace TestLanSkærm.Controllers
 
 		public async Task<IActionResult> SampleFunctionAsync()
 		{
-			AccessTokenResponse test = await _authToken.GetAuthTokenAsync();
-			var tournement = test.Value;
 			return View();
 		}
 

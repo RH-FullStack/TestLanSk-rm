@@ -7,9 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\Tournement.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GraphQL" Version="7.7.2" />
     <PackageReference Include="GraphQL.Client" Version="6.0.2" />
     <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Home\Tournement.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Home\Tournement.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\Tournement.razor" />
   </ItemGroup>
 
 </Project>
