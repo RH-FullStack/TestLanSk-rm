@@ -22,8 +22,9 @@ namespace TestLanSkærm.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> SampleFunctionAsync()
+		public IActionResult ViewTournement(string id)
 		{
+
 			return View();
 		}
 

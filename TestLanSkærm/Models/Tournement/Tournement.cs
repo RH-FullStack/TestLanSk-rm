@@ -8,7 +8,7 @@
 
     public class Data
     {
-        public Tournement Tournement { get; set; }
+        public Tournement Tournament { get; set; }
     }
 
     public class Tournement

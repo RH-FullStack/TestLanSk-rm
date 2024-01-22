@@ -38,7 +38,7 @@ namespace TestLanSkærm.Service.Tournements
                 TournamentData tournamentData = JsonConvert.DeserializeObject<TournamentData>(data);
 
 
-                tournements.Add(tournamentData.Data.Tournement);
+                tournements.Add(tournamentData.Data.Tournament);
             }
 			
 			return tournements;

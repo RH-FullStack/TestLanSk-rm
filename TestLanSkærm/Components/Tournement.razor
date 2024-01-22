@@ -1,19 +1,68 @@
-﻿@inherits Microsoft.AspNetCore.Components.ComponentBase
+﻿@inherits Microsoft.AspNetCore.Components.ComponentBase;
 @using TestLanSkærm.Models.Tournement;
 @using TestLanSkærm.ResponseModels;
 @using TestLanSkærm.Service;
 @using TestLanSkærm.Service.Tournements;
 @inject GetAuthTokenGraphQL _authToken;
+@inject NavigationManager navi;
 <h3>Tournement</h3>
+@if (tournements == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<NavLink class="nav-link" href="/AddTournement">
+		<span class="oi oi-list-rich" aria-hidden="true"></span> Add TournementId
+	</NavLink>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Id</th>
+				<th>Description</th>
+				<th>State</th>
+			</tr>
+		</thead>
+		<tbody>
 
+			@foreach (var tournement in tournements)
+			{
+				<tr>
+
+					<td>@tournement.Name</td>
+					<td>@tournement.Id</td>
+					<td>@tournement.Description</td>
+					<td>@tournement.State</td>
+					<td>
+						<button  id="@tournement.Id" class="btn btn-secondary mr-2">View Tournement</button>
+						<button id="@tournement.Id" class="btn btn-danger">Slet</button>
+					</td>
+				</tr>
+
+			}
+		</tbody>
+	</table>
+}
 @code {
-    private List<TestLanSkærm.Models.Tournement.Tournement>? tournements;
-    protected override async Task OnInitializedAsync()
-    {
-        //recipies = await Http.GetFromJsonAsync<Recipe[]>("https://localhost:7252/api/Recipe/getallrecipe");
-        List<string> strings = new List<string>();
-        strings.Add("63f86dd2-c649-4ae1-2c8f-08dc16b0d7f7");
-        var test = await _authToken.GetAuthTokenAsync();
-        tournements = await TournementService.GetAllTournements(test.Value, strings);
-    }
+	private List<TestLanSkærm.Models.Tournement.Tournement>? tournements;
+	private bool redirectClicked = false;
+
+	protected override async Task OnInitializedAsync()
+	{
+		//recipies = await Http.GetFromJsonAsync<Recipe[]>("https://localhost:7252/api/Recipe/getallrecipe");
+		List<string> strings = new List<string>();
+		strings.Add("63f86dd2-c649-4ae1-2c8f-08dc16b0d7f7");
+		var test = await _authToken.GetAuthTokenAsync();
+		tournements = await TournementService.GetAllTournements(test.Value, strings);
+	}
+
+	private void ViewTournement(string id)
+	{
+		if (!redirectClicked)
+		{
+			navi.NavigateTo($"/home/viewtournement/{id}");
+		}
+
+	}
 }
