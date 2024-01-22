@@ -3,6 +3,7 @@
 @using TestLanSkærm.ResponseModels;
 @using TestLanSkærm.Service;
 @using TestLanSkærm.Service.Tournements;
+@using Microsoft.AspNetCore.Components.Web;
 @inject GetAuthTokenGraphQL _authToken;
 @inject NavigationManager navi;
 <h3>Tournement</h3>
@@ -35,7 +36,7 @@ else
 					<td>@tournement.Description</td>
 					<td>@tournement.State</td>
 					<td>
-						<button  id="@tournement.Id" class="btn btn-secondary mr-2">View Tournement</button>
+						<button @onclick="() => ViewTournement(tournement.Id)" class="btn btn-secondary mr-2">View Tournement</button>
 						<button id="@tournement.Id" class="btn btn-danger">Slet</button>
 					</td>
 				</tr>
@@ -57,12 +58,13 @@ else
 		tournements = await TournementService.GetAllTournements(test.Value, strings);
 	}
 
-	private void ViewTournement(string id)
+	public async Task ViewTournement(string id)
 	{
-		if (!redirectClicked)
-		{
-			navi.NavigateTo($"/home/viewtournement/{id}");
-		}
+		// Build the URL for the MVC controller action with the parameter
+		var url = $"/Home/ViewTournement";
+
+		// Navigate to the MVC controller action
+	   navi.NavigateTo(url);
 
 	}
 }
